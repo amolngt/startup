@@ -1,23 +1,44 @@
 const express= require('express')
 const cors= require('cors')
-const mongoose= require('mongoose');
 require('dotenv').config();
 
-const app= express();
-const port= process.env.port || 5000;
+var cluster = require('cluster');
+var numCPUs = require('os').cpus().length;
+process.env.ENVIORNMENT;
 
-app.use(cors());
-app.use(express.json());
+if (cluster.isMaster) {
+    console.log("[ENV] " + process.env.ENVIORNMENT);
+    // Fork workers.
+    for (var i = 0; i < numCPUs; i++) {
+      cluster.fork();
+    }
 
-const uri=process.env.MONGO_ATLAS_URI;
-mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true,useUnifiedTopology: true });
-const connection= mongoose.connection;
-connection.once('open',()=> console.log(`mongo started`))
+    Object.keys(cluster.workers).forEach(function (id) {
+      console.log("I am running with ID : " + cluster.workers[id].process.pid);
+    });
 
-const exercise_router= require('./routes/exercise')
-const user_router= require('./routes/user')
+    cluster.on('exit', function (worker, code, signal) {
+      console.log('worker ' + worker.process.pid + ' died');
+    });
 
-app.use('/exercise',exercise_router)
-app.use('/user',user_router)
-app.listen(port,()=> console.log(`app listenig at port ${port}`))
+} else {
+    const app= express();
+    const port= process.env.port || 5000;
+
+    app.use(cors());
+    app.use(express.json());
+
+    const db = require("./model");
+    db.sequelize.sync();
+
+    const category_router= require('./routes/category')
+    const user_router= require('./routes/user')
+    const login_router= require('./routes/login')
+
+    app.use('/category',category_router)
+    app.use('/user',user_router)
+    app.use('/login',login_router)
+    app.listen(port,()=> console.log(`app listenig at port ${port}`))
+
+}
 

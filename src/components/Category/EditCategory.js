@@ -2,6 +2,7 @@ import React ,{ useState, useEffect } from 'react';
 import * as constants from "../../constants"
 import { useHistory, useParams} from "react-router-dom"
 import axios from 'axios';
+axios.defaults.headers.common['Authorization'] = "Bearer "+localStorage.getItem('auth')
 const EditCategory =()=>{
   const {id}= useParams()
   const history= useHistory()

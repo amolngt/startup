@@ -32,12 +32,19 @@ if (cluster.isMaster) {
     db.sequelize.sync();
 
     const category_router= require('./routes/category')
+    const subcategory_router= require("./routes/subcategory")
+    const product_router= require('./routes/product')
     const user_router= require('./routes/user')
+    const home_router= require('./routes/home')
     const login_router= require('./routes/login')
 
     app.use('/category',category_router)
+    app.use('/subcategory',subcategory_router)
+    app.use('/product',product_router)
     app.use('/user',user_router)
+    app.use('/home',home_router)
     app.use('/login',login_router)
+    // app.use('/helper',helper_router)
     app.listen(port,()=> console.log(`app listenig at port ${port}`))
 
 }

@@ -5,9 +5,9 @@ module.exports = {
     const authorizationHeaader = req.headers.authorization;
     let result;
     if (authorizationHeaader) {
-      const token = req.headers.authorization.split(' ')[1]; // Bearer <token>
+      var token = req.headers.authorization.split(' ')[1]; // Bearer <token>
       const options = {
-        expiresIn: '2d',
+        expiresIn: '1h',
         issuer: 'https://scotch.io'
       };
       try {

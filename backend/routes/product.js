@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const validateToken = require('./helper/utils').validateToken;
-const controller= require('../controllers/category')
+const controller= require('../controllers/product')
 
 router.route('/').get(validateToken, controller.get)
 

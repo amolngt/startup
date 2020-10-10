@@ -7,7 +7,7 @@ import axios from 'axios';
 const Auth =()=>{
   let history= useHistory()
   try{
-    const auth= JSON.parse(localStorage.getItem('auth'))
+    const auth= localStorage.getItem('auth')
     if(auth){
       history.push('/home');
     }
@@ -30,7 +30,7 @@ const Auth =()=>{
       e.preventDefault();
       axios.post(constants.LOCAL+'login/checkuser',user).then(response=>{
           if(response.data.status=== true){
-              localStorage.setItem("auth",JSON.stringify(response.data.token))
+              localStorage.setItem("auth",response.data.token)
               history.push('/home');
           }else{
             alert("Invalid name or password")

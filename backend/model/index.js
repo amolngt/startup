@@ -1,5 +1,4 @@
 const dbConfig = require("./db.config.js");
-
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -20,5 +19,8 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.category = require("./category.js")(sequelize, Sequelize);
+db.subcategory = require("./subcategory.js")(sequelize, Sequelize);
+db.product = require("./product.js")(sequelize, Sequelize);
 db.users = require("./users.js")(sequelize, Sequelize);
+
 module.exports = db;

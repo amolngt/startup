@@ -33,7 +33,7 @@ module.exports=function(sequelize, DataTypes){
         defaultValue:1
         },
     }, {
-      freezeTableName: true, // Model tableName will be the same as the model name
+      freezeTableName: true,
       classMethods:{},
       underscored: true
     });

@@ -1,7 +1,7 @@
 
 var Sequelize = require("sequelize");
 module.exports=function(sequelize, DataTypes){ 
-    let category = sequelize.define("category", {
+    let products = sequelize.define("products", {
     id: {
         type: DataTypes.INTEGER,    
         autoIncrement: !0,       
@@ -13,6 +13,20 @@ module.exports=function(sequelize, DataTypes){
     description: {                
         type: DataTypes.STRING
     },
+    image:{
+        type: DataTypes.STRING
+    },
+    price:{
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+        defaultValue: '0.000'
+    },
+    category_id:{
+        type:DataTypes.INTEGER
+    },
+    subcategory_id:{
+        type:DataTypes.INTEGER
+    },
     is_active: {
         type: Sequelize.TINYINT(1),
         defaultValue:1
@@ -21,13 +35,14 @@ module.exports=function(sequelize, DataTypes){
       freezeTableName: true,
       classMethods:{
         // associate: function (models) {
+
         // },
       },
     //   underscored: true
     });
-    category.deactivate=(id)=>{
+   products.deactivate=(id)=>{
         return new Promise((resolve, reject)=>{
-            var sql = 'update category set is_active=0,updatedAt=now() where id=:id';
+            var sql = 'update products set is_active=0 and updatedAt=now() where id=:id';
             sequelize.query(sql, {
               replacements: {id:id},
               raw: true
@@ -38,13 +53,9 @@ module.exports=function(sequelize, DataTypes){
             });
         })
     };
-    category.get_all_counts=()=>{
+    products.get_allproducts=()=>{
         return new Promise((resolve, reject)=>{
-            var sql = 'select count(*) as category from sys.category where is_active=1 '+
-            'UNION '+
-            'select count(*) as subcategory from sys.subcategory where is_active=1 '+
-            'UNION '+
-            'select count(*) as product from sys.products where is_active=1';
+            var sql = 'select c.name as cat_name,sc.name as subcat_name,p.id,p.name,p.description,p.image,p.price from products p join category c on p.category_id=c.id join subcategory sc on sc.id=p.subcategory_id where sc.is_active=1 and c.is_active=1 and p.is_active=1 order by sc.id desc';
             sequelize.query(sql, {
               replacements: {},
               raw: true,
@@ -55,7 +66,6 @@ module.exports=function(sequelize, DataTypes){
                 reject(err);
             });
         })
-
-    }
-    return category
+    };
+     return products;
   };

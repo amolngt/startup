@@ -27,9 +27,9 @@ class Sidebar extends Component{
       </button>
       <div className="dropdown-container">
         <Link className="btn" to="/allcategories">Category</Link>
-        <a href="#about">Sub-Category</a>
+        <Link className="btn" to="/allsubcategories">Sub-Category</Link>
       </div>
-      <a href="#about">Products</a>
+      <Link className="btn" to="/allproducts">Product</Link>
       <a href="#about">Orders</a>
       <a href="#about">Customers</a>
     </div>

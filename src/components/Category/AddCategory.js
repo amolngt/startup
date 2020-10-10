@@ -13,14 +13,8 @@ const AddCategory =()=>{
     })
   const { category_name, category_description}= category
   const onInputChange=(e)=>{
-        setCategory({ ...category, [e.target.name]: e.target.value })
-    }
-    
-    // onChangeDate=(date)=>{
-    //     this.setState({
-    //         date: date
-    //     })
-    // }
+    setCategory({ ...category, [e.target.name]: e.target.value })
+  }
   const onSubmit=(e)=>{
       e.preventDefault();
       axios.post(constants.LOCAL+'category/add',category).then(response=>{

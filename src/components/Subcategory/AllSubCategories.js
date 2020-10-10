@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Category from './Category';
+import Subcategory from './SubCategory';
 import {Link} from "react-router-dom"
 import * as constants from "../../constants"
 import axios from 'axios';
 
 
 
-const AllCategories=() =>{
+const AllSubCategories=() =>{
   const [categories, setCats]= useState([])
   useEffect(()=>{
     getCategories()
@@ -14,9 +14,9 @@ const AllCategories=() =>{
 
   const getCategories=()=>{
     axios.defaults.headers.common['Authorization'] = "Bearer "+localStorage.getItem('auth')
-    axios.get(constants.LOCAL+'category').then(response=>{
+    axios.get(constants.LOCAL+'subcategory').then(response=>{
       if(response.data.length >0){
-        setCats(response.data.reverse())
+        setCats(response.data)
       }
     }).catch(error=>{
         throw error;
@@ -24,7 +24,7 @@ const AllCategories=() =>{
   }
   const deleteCategory=(id)=>{
     if(id){
-      axios.delete(constants.LOCAL+'category/'+id).then(response=>{
+      axios.delete(constants.LOCAL+'subcategory/'+id).then(response=>{
       }).catch(error=>{
         throw error;
       })
@@ -37,12 +37,13 @@ const AllCategories=() =>{
 return (
 <div className="main">
 <div className="p-4">
-  <h4 className="post_heading">All Categories</h4>
-  <Link className="common_btn common_btn_default" to="/addcategory" style={{float:"right",padding: "7px 14px",marginBottom: "15px"}}>Add Category</Link>
+  <h4 className="post_heading">All SubCategories</h4>
+  <Link className="common_btn common_btn_default" to="/addsubcategory" style={{float:"right",padding: "7px 14px",marginBottom: "15px"}}>Add SubCategory</Link>
   <table className="table border shadow">
       <thead>
         <tr>
           <th scope="col">#</th>
+          <th scope="col">Category</th>
           <th scope="col">Name</th>
           <th scope="col">Description</th>
           <th scope="col">Action</th>
@@ -52,7 +53,7 @@ return (
       {
         categories.map((category,index)=>(
           <tr key={category.id}>
-            <Category cat={category} index={index} deleteCategory={deleteCategory}/>
+            <Subcategory cat={category} index={index} deleteCategory={deleteCategory}/>
           </tr>
         ))
       }
@@ -62,4 +63,4 @@ return (
 </div>
 );
 }
-export default AllCategories
+export default AllSubCategories

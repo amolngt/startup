@@ -29,19 +29,19 @@ const Home=()=>{
         <p>Some random text..</p>
         </div>
         <div className="row">
-          <div className="column">
-            <div className="card">
-              <h3>Total categories</h3>
-              <p>{counts[0].category}</p>
-            </div>
+        <div className="column">
+          <div className="card">
+            <h3>Total categories</h3>
+            <p>{counts[0].category}</p>
           </div>
+        </div>
 
-          <div className="column">
-            <div className="card">
-              <h3>Total subcategories</h3>
-              <p>{counts[1].category}</p>
-            </div>
+        <div className="column">
+          <div className="card">
+            <h3>Total subcategories</h3>
+            <p>{counts[1].category}</p>
           </div>
+        </div>
   
   <div className="column">
     <div className="card">

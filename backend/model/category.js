@@ -40,11 +40,11 @@ module.exports=function(sequelize, DataTypes){
     };
     category.get_all_counts=()=>{
         return new Promise((resolve, reject)=>{
-            var sql = 'select count(*) as category from sys.category where is_active=1 '+
-            'UNION '+
-            'select count(*) as subcategory from sys.subcategory where is_active=1 '+
-            'UNION '+
-            'select count(*) as product from sys.products where is_active=1';
+            var sql = 'select count(*) as category from category c where is_active=1 '+
+            'UNION ALL '+
+            'select count(*) as subcategory from subcategory  where is_active=1 '+
+            'UNION ALL '+
+            'select count(*) as product from products where is_active=1';
             sequelize.query(sql, {
               replacements: {},
               raw: true,
